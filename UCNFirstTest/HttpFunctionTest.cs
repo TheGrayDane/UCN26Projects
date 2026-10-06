@@ -32,5 +32,5 @@ public class HttpFunctionTest
 public class Envelope
 {
     public int Id { get; set; }
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 }
