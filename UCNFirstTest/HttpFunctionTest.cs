@@ -15,9 +15,22 @@ public class HttpFunctionTest
     }
 
     [Function("HttpFunctionTest")]
-    public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req)
+    [QueueOutput("test-queue", Connection = "Int-queue")]
+    public Envelope Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req)
     {
-        _logger.LogInformation("C# HTTP trigger function processed a request.");
-        return new OkObjectResult("Hello World");
+        var envelope = new Envelope
+        {
+            Id = 1,
+            Message = "Hello World"
+        };
+        _logger.LogInformation("C# HTTP trigger function should return an envelope.");
+        return envelope;
     }
+
+}
+
+public class Envelope
+{
+    public int Id { get; set; }
+    public string Message { get; set; }
 }
